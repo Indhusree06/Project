@@ -43,28 +43,35 @@ st.title('CPS Data Analysis Dashboard')
 
 if not data.empty:
     # Sidebar for user inputs and filters
-    st.sidebar.header("Filter Data")
-    gender_to_filter = st.sidebar.multiselect('Select Gender:', options=data['PESEX'].dropna().unique())
-    income_to_filter = st.sidebar.multiselect('Select Income Range:', options=data['HEFAMINC'].dropna().unique())
-    marital_status_to_filter = st.sidebar.multiselect('Select Marital Status:', options=data['PRMARSTA'].dropna().unique())
+    # Sidebar for user inputs and filters
+st.sidebar.header("Filter Data")
+gender_to_filter = st.sidebar.multiselect('Select Gender:', options=data['PESEX'].dropna().unique())
+income_to_filter = st.sidebar.multiselect('Select Income Range:', options=data['HEFAMINC'].dropna().unique())
+marital_status_to_filter = st.sidebar.multiselect('Select Marital Status:', options=data['PRMARSTA'].dropna().unique())
+
+if 'AGE' in data.columns:
     age_to_filter = st.sidebar.slider('Select Age Range:', int(data['AGE'].min()), int(data['AGE'].max()), (18, 65))
-    if 'ST' in data.columns:
-        state_to_filter = st.sidebar.multiselect('Select State:', options=data['ST'].dropna().unique())
-    else:
-        state_to_filter = []
+    age_filter_applied = True
+else:
+    age_filter_applied = False
 
-    # Applying filters
-    filtered_data = data.copy()
-    if gender_to_filter:
-        filtered_data = filtered_data[filtered_data['PESEX'].isin(gender_to_filter)]
-    if income_to_filter:
-        filtered_data = filtered_data[filtered_data['HEFAMINC'].isin(income_to_filter)]
-    if marital_status_to_filter:
-        filtered_data = filtered_data[filtered_data['PRMARSTA'].isin(marital_status_to_filter)]
+if 'ST' in data.columns:
+    state_to_filter = st.sidebar.multiselect('Select State:', options=data['ST'].dropna().unique())
+else:
+    state_to_filter = []
+
+# Applying filters
+filtered_data = data.copy()
+if gender_to_filter:
+    filtered_data = filtered_data[filtered_data['PESEX'].isin(gender_to_filter)]
+if income_to_filter:
+    filtered_data = filtered_data[filtered_data['HEFAMINC'].isin(income_to_filter)]
+if marital_status_to_filter:
+    filtered_data = filtered_data[filtered_data['PRMARSTA'].isin(marital_status_to_filter)]
+if age_filter_applied:
     filtered_data = filtered_data[(filtered_data['AGE'] >= age_to_filter[0]) & (filtered_data['AGE'] <= age_to_filter[1])]
-    if 'ST' in filtered_data.columns and state_to_filter:
-        filtered_data = filtered_data[filtered_data['ST'].isin(state_to_filter)]
-
+if 'ST' in filtered_data.columns and state_to_filter:
+    filtered_data = filtered_data[filtered_data['ST'].isin(state_to_filter)]
     # Displaying data and statistics
     st.write("### Summary Statistics")
     st.write(filtered_data.describe(include='all'))
