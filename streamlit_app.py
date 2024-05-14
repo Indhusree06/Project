@@ -24,7 +24,7 @@ state_mapping = {1: 'Alabama', 2: 'Alaska', 4: 'Arizona', 5: 'Arkansas', 6: 'Cal
 
 # Function to load data from a local file
 def load_data():
-    df = pd.read_csv('fig)
+    df = pd.read_csv('USdatSt.csv')
 
     # Additional analyses
     if 'ST' in filtered_data.columns:
