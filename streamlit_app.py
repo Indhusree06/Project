@@ -63,8 +63,6 @@ if not data.empty:
         data = data[data['ST'].isin(state_to_filter)]
 
     # Displaying data and statistics
-    st.write("### Summary Statistics")
-    st.write(data.describe(include='all'))
 
     # Plots
     st.write("### Gender Distribution")
@@ -121,3 +119,14 @@ if not data.empty:
     plt.xlabel('Income Range')
     plt.ylabel('Frequency')
     plt.xticks(rotation=45)
+    st.pyplot(fig)
+
+    # Heatmap analysis
+    st.write("### Heatmap of Gender and Marital Status")
+    heatmap_data = pd.crosstab(data['PESEX'], data['PRMARSTA'])
+    fig, ax = plt.subplots(figsize=(12, 8))
+    sns.heatmap(heatmap_data, annot=True, fmt="d", cmap="YlGnBu", ax=ax)
+    plt.title('Heatmap of Gender and Marital Status')
+    plt.xlabel('Marital Status')
+    plt.ylabel('Gender')
+    st.pyplot(fig)
