@@ -24,50 +24,7 @@ state_mapping = {1: 'Alabama', 2: 'Alaska', 4: 'Arizona', 5: 'Arkansas', 6: 'Cal
 
 # Function to load data from a local file
 def load_data():
-    df = pd.read_csv('USdatSt.csv')
-
-    # Additional analyses
-    if 'ST' in filtered_data.columns:
-        st.write("### Gender Distribution by State")
-        fig, ax = plt.subplots(figsize=(10, 6))
-        sns.countplot(x='ST', hue='PESEX', data=filtered_data, ax=ax)
-        plt.title('Gender Distribution by State')
-        plt.xlabel('State')
-        plt.ylabel('Frequency')
-        plt.xticks(rotation=45)
-        plt.legend(title='Gender', loc='upper right')
-        st.pyplot(fig)
-
-    corr = filtered_data.corr()
-    st.write("### Correlation Matrix")
-    st.write(corr)
-
-    # Plot correlation heatmap
-    fig, ax = plt.subplots(figsize=(10, 8))
-    sns.heatmap(corr, annot=True, cmap='coolwarm', ax=ax)
-    plt.title('Correlation Heatmap')
-    st.pyplot(fig)
-
-    st.write("### Income Distribution by Gender and Age Group")
-    fig, ax = plt.subplots(figsize=(10, 6))
-    sns.countplot(x='HEFAMINC', hue='PESEX', data=filtered_data, hue_order=['Male', 'Female'], col='age_group', ax=ax)
-    plt.title('Income Distribution by Gender and Age Group')
-    plt.xlabel('Income Range')
-    plt.ylabel('Frequency')
-    plt.xticks(rotation=45)
-    plt.legend(title='Gender', loc='upper right')
-    st.pyplot(fig)
-
-    if 'ST' in filtered_data.columns:
-        st.write("### Income Distribution by State")
-        fig, ax = plt.subplots(figsize=(10, 6))
-        sns.countplot(x='ST', hue='HEFAMINC', data=filtered_data, ax=ax)
-        plt.title('Income Distribution by State')
-        plt.xlabel('State')
-        plt.ylabel('Frequency')
-        plt.xticks(rotation=45)
-        plt.legend(title='Income Range', loc='upper right')
-        st.pyplot(fig)')
+    df = pd.read_csv('US Census.csv')
     df.dropna(inplace=True)  # Ensuring no missing values
     df['PESEX'] = df['PESEX'].map(sex_mapping)
     df['HEFAMINC'] = df['HEFAMINC'].map(income_mapping)
