@@ -24,7 +24,7 @@ state_mapping = {1: 'Alabama', 2: 'Alaska', 4: 'Arizona', 5: 'Arkansas', 6: 'Cal
 
 # Function to load data from a local file
 def load_data():
-    df = pd.read_csv('US Census.csv')
+    df = pd.read_csv('USdatSt.csv')
     df.dropna(inplace=True)  # Ensuring no missing values
     df['PESEX'] = df['PESEX'].map(sex_mapping)
     df['HEFAMINC'] = df['HEFAMINC'].map(income_mapping)
