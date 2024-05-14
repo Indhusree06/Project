@@ -130,3 +130,7 @@ if not data.empty:
     plt.xlabel('Marital Status')
     plt.ylabel('Gender')
     st.pyplot(fig)
+
+    # Descriptive statistics
+    st.write("### Summary Statistics")
+    st.write(data.describe(include='all'))
